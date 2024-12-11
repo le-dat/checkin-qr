@@ -1,7 +1,6 @@
-import React from 'react';
-import { Link, useRouteError } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AlertCircle, RefreshCw } from 'lucide-react';
+import { Link, useRouteError } from 'react-router-dom';
 
 export default function Error() {
   const error = useRouteError() as { statusText?: string; message?: string };

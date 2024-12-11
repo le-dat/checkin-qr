@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import TabNavigation from "../components/TabNavigation";
 import CheckInList from "../components/CheckInList";
 import CheckInScanner from "../components/CheckInScanner";
+import TabNavigation from "../components/TabNavigation";
 
 const Home: React.FC = () => {
   const [activeTab, setActiveTab] = useState("scanner");
