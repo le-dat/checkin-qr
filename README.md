@@ -13,6 +13,7 @@ This is a client check-in application built with React, TypeScript, and Tailwind
 
 ## Getting Started
 
+```sh
 ├── .gitignore
 ├── eslint.config.js
 ├── index.html
@@ -45,6 +46,7 @@ This is a client check-in application built with React, TypeScript, and Tailwind
 ├── tsconfig.json
 ├── tsconfig.node.json
 └── vite.config.ts
+```
 
 ### Prerequisites
 
