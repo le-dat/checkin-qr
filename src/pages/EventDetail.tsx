@@ -3,7 +3,7 @@ import CheckInList from "../components/CheckInList";
 import CheckInScanner from "../components/CheckInScanner";
 import TabNavigation from "../components/TabNavigation";
 
-const Home: React.FC = () => {
+const EventDetail: React.FC = () => {
   const [activeTab, setActiveTab] = useState("scanner");
 
   return (
@@ -15,4 +15,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default EventDetail;
