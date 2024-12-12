@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const NotFound = React.lazy(() => import("./pages/NotFound"));
-const UserDetailPage = React.lazy(() => import("./pages/UserDetail"));
+const TicketCard = React.lazy(() => import("./pages/TicketCard"));
 const Loading = React.lazy(() => import("./pages/Loading"));
 const EventDetail = React.lazy(() => import("./pages/EventDetail"));
 const Events = React.lazy(() => import("./pages/Events"));
@@ -20,8 +20,8 @@ const App: React.FC = () => {
             transition={{ duration: 0.3 }}
           >
             <Routes>
-              <Route path="/user/:userId" element={<UserDetailPage />} />
-              <Route path="/event/:eventId" element={<EventDetail />} />
+              <Route path="/ticket/:id" element={<TicketCard />} />
+              <Route path="/event/:id" element={<EventDetail />} />
               <Route path="/" element={<Events />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
