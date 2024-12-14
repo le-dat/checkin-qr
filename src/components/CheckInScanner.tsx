@@ -28,7 +28,7 @@ const CheckInScanner = () => {
         setMessage(response?.data?.message);
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          setMessage(error?.response?.data?.data?.error || "Lỗi khi check-in");
+          setMessage(error?.response?.data?.error || "Lỗi khi check-in");
         } else {
           setMessage("Lỗi khi check-in");
         }
@@ -72,16 +72,16 @@ const CheckInScanner = () => {
         </p>
       </div>
 
-      <p className="mt-6 text-gray-600">Quét mã QR để check-in cho sự kiện.</p>
-
       {/* info user */}
-      {user && (
+      {user ? (
         <div className="flex flex-col gap-4">
           <p className="text-gray-600 flex ">Họ và tên: {user?.username}</p>
           <p className="text-gray-600 flex ">Khóa: {user?.level}</p>
           <p className="text-gray-600 flex ">Email: {user?.email}</p>
           <p className="text-gray-600 flex ">số điện thoại: {user?.phone}</p>
         </div>
+      ) : (
+        <p className="mt-6 text-gray-600">Quét mã QR để check-in cho sự kiện.</p>
       )}
     </div>
   );
