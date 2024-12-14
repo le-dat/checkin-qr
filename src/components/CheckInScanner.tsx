@@ -14,13 +14,15 @@ const CheckInScanner = () => {
   const handleScan = async (result: { getText: () => string }) => {
     if (result) {
       alert(result?.getText());
-      setScanResult(result?.getText());
+      setScanResult(`${import.meta.env.BASE_URL}/events/${id}/check-in`);
       setLoading(true);
 
       try {
         const response = await axios.post(`${import.meta.env.BASE_URL}/events/${id}/check-in`, {
           userId: result?.getText(),
         });
+        alert(response?.data);
+
         setData(response?.data);
         setMessage(response?.data?.message);
       } catch (error) {
@@ -42,10 +44,10 @@ const CheckInScanner = () => {
 
   return (
     <div className="h-full max-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">Check-In Sự Kiện</h1>
+      <h1 className="text-sm lg:text-3xl font-bold text-gray-800 mb-6">Check-In Sự Kiện</h1>
 
       <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
-        <h2 className="text-xl font-semibold text-gray-700 mb-4">Quét Mã QR</h2>
+        <h2 className="text-sm lg:text-xl font-semibold text-gray-700 mb-4">Quét Mã QR</h2>
         <div className="bg-gray-200 rounded-lg overflow-hidden mb-4">
           {loading ? (
             <p className="text-yellow-500 text-center">Đang xử lý...</p>
