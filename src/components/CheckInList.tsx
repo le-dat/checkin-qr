@@ -29,7 +29,9 @@ const CheckInList: React.FC = () => {
 
   return (
     <div className="max-w-md mx-auto bg-gradient-to-r from-purple-400 via-pink-300 to-red-300 p-6 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-white mb-4 text-center">Checked-In Users (10)</h2>
+      <h2 className="text-2xl font-bold text-white mb-4 text-center">
+        Checked-In Users ({data?.data?.user?.length})
+      </h2>
       <ul className="divide-y divide-gray-200">
         {data?.data?.user && data?.data?.user?.length > 0 ? (
           data?.data?.user?.map((user, index) => (
