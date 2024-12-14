@@ -14,7 +14,7 @@ const CheckInScanner = () => {
   const handleScan = async (result: { getText: () => string }) => {
     if (result) {
       alert(result?.getText());
-      return
+      setScanResult(result?.getText());
       setLoading(true);
 
       try {
