@@ -8,6 +8,7 @@ const CheckInScanner = () => {
   const { id = "" } = useParams();
   const [_scanResult, setScanResult] = useState("");
   const [message, setMessage] = useState("");
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleScan = async (result: { getText: () => string }) => {
@@ -16,7 +17,7 @@ const CheckInScanner = () => {
       setLoading(true);
 
       try {
-        const response = await axios.post(`${import.meta.env}/${id}/check-in`, {
+        const response = await axios.post(`${import.meta.env}/events/${id}/check-in`, {
           userId: result.getText(),
           eventId: id,
         });
@@ -68,6 +69,18 @@ const CheckInScanner = () => {
       </div>
 
       <p className="mt-6 text-gray-600">Quét mã QR để check-in cho sự kiện.</p>
+
+      {/* info user */}
+      {data && (
+        <div className="flex flex-col gap-4">
+          <p className="text-gray-600">Họ và tên:</p>
+          <p className="text-gray-800">User Name</p>
+          <p className="text-gray-600">SĐT:</p>
+          <p className="text-gray-800">0123456789</p>
+          <p className="text-gray-600">Email:</p>
+          <p className="text-gray-800">user@example.com</p>
+        </div>
+      )}
     </div>
   );
 };
