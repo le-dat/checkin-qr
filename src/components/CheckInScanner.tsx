@@ -24,11 +24,11 @@ const CheckInScanner = () => {
             userId: result?.getText(),
           }
         );
-        setUser(response?.data?.user);
-        setMessage(response?.data?.message);
+        setUser(response?.data?.data?.user);
+        setMessage(response?.data?.data?.message);
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          setMessage(error?.response?.data?.error || "Lỗi khi check-in");
+          setMessage(error?.response?.data?.data?.error || "Lỗi khi check-in");
         } else {
           setMessage("Lỗi khi check-in");
         }
