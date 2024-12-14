@@ -110,6 +110,16 @@ const eventService = {
       throw new Error("Failed to fetch event by id");
     }
   },
+  getListCheckIn: async ({ eventId }: { eventId: string }) => {
+    try {
+      const response = await axiosClient.get<SuccessResponse<{ user: IUser[] }>>(
+        `/events/check-in-list/${eventId}`
+      );
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to fetch event by id");
+    }
+  },
 };
 
 export default eventService;
