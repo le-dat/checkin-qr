@@ -11,15 +11,17 @@ const CheckInScanner = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  console.log(import.meta.env.VITE_PUBLIC_API_ENDPOINT)
+
   const handleScan = async (result: { getText: () => string }) => {
     if (result) {
       alert(result?.getText());
-      alert(`${import.meta.env.BASE_URL}/events/${id}/check-in`);
+      alert(`${import.meta.env.VITE_PUBLIC_API_ENDPOINT}/events/${id}/check-in`);
       setScanResult(result?.getText());
       setLoading(true);
 
       try {
-        const response = await axios.post(`${import.meta.env.BASE_URL}/events/${id}/check-in`, {
+        const response = await axios.post(`${import.meta.env.VITE_PUBLIC_API_ENDPOINT}/events/${id}/check-in`, {
           userId: result?.getText(),
         });
         alert(response?.data);
