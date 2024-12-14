@@ -13,23 +13,23 @@ const CheckInScanner = () => {
 
   const handleScan = async (result: { getText: () => string }) => {
     if (result) {
-      setScanResult(result.getText());
+      alert(result?.getText());
       setLoading(true);
 
-      try {
-        const response = await axios.post(`${import.meta.env.BASE_URL}/events/${id}/check-in`, {
-          userId: result.getText(),
-        });
-        setMessage(response.data.message);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          setMessage(error.response?.data?.error || "Lỗi khi check-in");
-        } else {
-          setMessage("Lỗi khi check-in");
-        }
-      } finally {
-        setLoading(false);
-      }
+      // try {
+      //   const response = await axios.post(`${import.meta.env.BASE_URL}/events/${id}/check-in`, {
+      //     userId: result?.getText(),
+      //   });
+      //   setMessage(response?.data?.message);
+      // } catch (error) {
+      //   if (axios.isAxiosError(error)) {
+      //     setMessage(error?.response?.data?.error || "Lỗi khi check-in");
+      //   } else {
+      //     setMessage("Lỗi khi check-in");
+      //   }
+      // } finally {
+      //   setLoading(false);
+      // }
     }
   };
 
