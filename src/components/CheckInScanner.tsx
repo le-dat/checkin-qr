@@ -14,7 +14,8 @@ const CheckInScanner = () => {
   const handleScan = async (result: { getText: () => string }) => {
     if (result) {
       alert(result?.getText());
-      setScanResult(`${import.meta.env.BASE_URL}/events/${id}/check-in`);
+      alert(`${import.meta.env.BASE_URL}/events/${id}/check-in`);
+      setScanResult(result?.getText());
       setLoading(true);
 
       try {
@@ -26,6 +27,8 @@ const CheckInScanner = () => {
         setData(response?.data);
         setMessage(response?.data?.message);
       } catch (error) {
+        alert(JSON.stringify(error));
+
         if (axios.isAxiosError(error)) {
           setMessage(error?.response?.data?.error || "Lỗi khi check-in");
         } else {
