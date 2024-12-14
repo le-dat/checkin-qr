@@ -19,7 +19,6 @@ const CheckInScanner = () => {
       try {
         const response = await axios.post(`${import.meta.env.BASE_URL}/events/${id}/check-in`, {
           userId: result.getText(),
-          eventId: id,
         });
         setMessage(response.data.message);
       } catch (error) {
