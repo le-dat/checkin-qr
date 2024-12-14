@@ -74,7 +74,7 @@ const CheckInScanner = () => {
 
       {/* info user */}
       {user ? (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 mt-5">
           <p className="text-gray-600 flex ">Họ và tên: {user?.username}</p>
           <p className="text-gray-600 flex ">Khóa: {user?.level}</p>
           <p className="text-gray-600 flex ">Email: {user?.email}</p>
