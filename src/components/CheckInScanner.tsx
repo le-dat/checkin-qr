@@ -3,33 +3,30 @@ import axios from "axios";
 import { useState } from "react";
 import { QrReader } from "react-qr-reader";
 import { useParams } from "react-router-dom";
+import { IUser } from "../types/user-type";
 
 const CheckInScanner = () => {
   const { id = "" } = useParams();
   const [_scanResult, setScanResult] = useState("");
   const [message, setMessage] = useState("");
-  const [data, setData] = useState(null);
+  const [user, setUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(false);
-
-  console.log(import.meta.env.VITE_PUBLIC_API_ENDPOINT)
 
   const handleScan = async (result: { getText: () => string }) => {
     if (result) {
-      alert(result?.getText());
-      alert(`${import.meta.env.VITE_PUBLIC_API_ENDPOINT}/events/${id}/check-in`);
       setScanResult(result?.getText());
       setLoading(true);
 
       try {
-        const response = await axios.post(`${import.meta.env.VITE_PUBLIC_API_ENDPOINT}/events/${id}/check-in`, {
-          userId: result?.getText(),
-        });
-        alert(response?.data);
-
-        setData(response?.data);
+        const response = await axios.post(
+          `${import.meta.env.VITE_PUBLIC_API_ENDPOINT}/events/${id}/check-in`,
+          {
+            userId: result?.getText(),
+          }
+        );
+        setUser(response?.data?.user);
         setMessage(response?.data?.message);
       } catch (error) {
-        alert(JSON.stringify(error));
 
         if (axios.isAxiosError(error)) {
           setMessage(error?.response?.data?.error || "Lỗi khi check-in");
@@ -44,7 +41,7 @@ const CheckInScanner = () => {
 
   const handleError = (error: unknown) => {
     console.error("Lỗi máy quét QR:", error);
-    setMessage("Lỗi khi quét mã QR.");
+    // setMessage("Lỗi khi quét mã QR.");
   };
 
   return (
@@ -79,14 +76,11 @@ const CheckInScanner = () => {
       <p className="mt-6 text-gray-600">Quét mã QR để check-in cho sự kiện.</p>
 
       {/* info user */}
-      {data && (
+      {user && (
         <div className="flex flex-col gap-4">
-          <p className="text-gray-600">Họ và tên:</p>
-          <p className="text-gray-800">User Name</p>
-          <p className="text-gray-600">SĐT:</p>
-          <p className="text-gray-800">0123456789</p>
-          <p className="text-gray-600">Email:</p>
-          <p className="text-gray-800">user@example.com</p>
+          <p className="text-gray-600">Họ và tên: {user?.username}</p>
+          <p className="text-gray-600">SĐT: {user?.phone}</p>
+          <p className="text-gray-600">Email: {user?.email}</p>
         </div>
       )}
     </div>
