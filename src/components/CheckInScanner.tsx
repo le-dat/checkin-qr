@@ -25,7 +25,7 @@ const CheckInScanner = () => {
           }
         );
         setUser(response?.data?.data?.user);
-        setMessage(response?.data?.data?.message);
+        setMessage(response?.data?.message);
       } catch (error) {
         if (axios.isAxiosError(error)) {
           setMessage(error?.response?.data?.data?.error || "Lỗi khi check-in");
