@@ -16,7 +16,7 @@ const CheckInScanner = () => {
       setLoading(true);
 
       try {
-        const response = await axios.post(`${import.meta.env}/:eventId/check-in`, {
+        const response = await axios.post(`${import.meta.env}/${id}/check-in`, {
           userId: result.getText(),
           eventId: id,
         });

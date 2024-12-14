@@ -1,16 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { AlarmClockCheck, MapPin } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
-import React from "react";
+import React, { useRef } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import eventService from "../services/event-service";
 import Loading from "./Loading";
 import Error from "./Error";
 import { formatDate } from "../lib/utils";
+
 const TicketCard: React.FC = () => {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const userId = searchParams.get("id");
+  const qrRef = useRef<SVGSVGElement>(null);
 
   const { data, isLoading, error } = useQuery({
     queryKey: [`events`],
@@ -22,13 +24,28 @@ const TicketCard: React.FC = () => {
     refetchOnWindowFocus: false,
   });
 
-  const downloadImage = (url: string) => {
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `QR_Code.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const downloadImage = () => {
+    if (qrRef.current) {
+      const svg = qrRef.current;
+      const serializer = new XMLSerializer();
+      const svgString = serializer.serializeToString(svg);
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      const img = new Image();
+      img.src = `data:image/svg+xml;base64,${btoa(svgString)}`;
+      img.onload = () => {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx?.drawImage(img, 0, 0);
+        const pngFile = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = pngFile;
+        link.download = "QR_Code.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+    }
   };
 
   if (isLoading) return <Loading />;
@@ -57,7 +74,7 @@ const TicketCard: React.FC = () => {
           </div>
 
           <div className="flex justify-center my-6">
-            <QRCodeSVG value={userData?._id as string} size={200} />
+            <QRCodeSVG value={userData?._id as string} size={200} ref={qrRef} />
           </div>
           <div className="flex justify-between items-center text-sm text-gray-600 mb-4">
             <div>
@@ -72,13 +89,9 @@ const TicketCard: React.FC = () => {
             <span className="font-medium">Vé:</span> 1× Thường
           </div>
           <div className="flex justify-between">
-            {/* <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-              Chỉ đường
-            </button> */}
-
             <button
               className="px-4 py-2 w-full bg-green-500 text-white rounded-lg hover:bg-green-600"
-              onClick={() => downloadImage("https://via.placeholder.com/200x200.png?text=QR+Code")}
+              onClick={downloadImage}
             >
               Tải ảnh
             </button>
